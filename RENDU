@@ -1,0 +1,84 @@
+           Mini-projet 2 : Synthèse d'invariant en SMT-LIB
+                            fichier RENDU
+                     (à remplir obligatoirement)
+
+**Un mini-projet sans fichier RENDU rempli ne recevra pas de note.**
+
+Date limite: 15 décembre 2023 à 22:00
+
+Identité
+--------
+Nombre de binôme: **43**
+Nom, prénom 1: **Monrousseau, Matthieu**
+Nom, prénom 2: **Wong, Cedrick**
+
+
+Questions sur votre code
+------------------------
+
+** Exercice 2 **
+
+0. Avez-vous testé que `make invariants` s'exécute sans erreurs ou
+   warnings, puis que `./invariants` produit une sortie au format
+   SMT-LIB, et enfin que cette sortie est acceptée par Z3 ?
+
+**Oui**
+
+---
+
+1. Le type `term` est un type récursif : quel type de fonction OCaml
+   est-il naturel d'utiliser ? Quels sont vos cas de base et quelle
+   quantité strictement décroissante au cours des appels successifs
+   vous assure la terminaison ?
+
+**Il est naturel d'utiliser des fonctions récursive utilisant le pattern matching avec pour cas de base Const et Var alors que Add et Mult nous indique qu'il reste des appels récursifs à effectuer pour terminer.**
+
+---
+
+2. Pour l'implémentation de `str_condition`, quelles sont les
+   fonctions auxiliaires que vous avez utilisées et/ou écrites ? (Par
+   une fonction auxiliaire, on entend ici soit une fonction d'une
+   bibliothèque, par exemple des fonctions comme `List.length` ou
+   `List.rev_append`, ou une fonction `aux_str_condition` que vous
+   avez écrite vous-mêmes.) Expliquez en quelques phrases en français
+   comment ces fonctions auxiliaires sont utilisées dans votre
+   implémentation de la fonction `str_condition`.
+
+**Nous avons uniquement créer une fonction auxiliaire "aux" pour exteriorisé l'appel récursif pour pouvoir rajouter la string "Invar" dans la fonction de base.**
+
+---
+
+3. Pour l'implémentation de `str_assert_forall`, quelles sont les
+   fonctions auxiliaires que vous avez utilisées et/ou écrites ?
+   Expliquez en quelques phrases en français comment ces fonctions
+   auxiliaires sont utilisées dans votre implémentation de la fonction
+   `str_assert_forall`.
+
+**Nous avons utilisé les fonctions `init` de la bibliothèque List pour initialiser une liste avec le bon nombre de variables et `concat` de la bibliothèque String pour rajouter la syntaxe avec les parenthèses.**
+
+---
+
+4. Le langage de programmation WA suppose que les mises à jour des
+   variables `x1`, ..., `xk` sont simultanées : par exemple, si `x1`
+   vaut `1` et x2 vaut `1`, exécuter
+
+   x1 = x2 + 1;
+   x2 = x1 + 1;
+
+   résulte en `x1` valant `2` et `x2` valant `2`. En Java, les mises à
+   jour sont séquentielles et le résultat serait que `x1` vaudrait `2`
+   et `x2` vaudrait `3`. Expliquez comment modifier le code pour
+   construire un programme SMT-LIB plus proche de la façon dont les
+   variables sont mises à jour en Java.
+
+**Pour obtenir le même résultat qu'en Java, la solution la plus naive serait de passer par la définition d'une variable temporaire au moment du calcul, ce qui nous donnerait pour l'exemple plus haut :**
+
+`let tmp = x2+1 in`
+`x1 = tmp;`
+`x2 = tmp+1;`
+
+---
+
+5. Avez-vous d'autres remarques sur votre rendu ? (question optionnelle)
+
+**Non**
